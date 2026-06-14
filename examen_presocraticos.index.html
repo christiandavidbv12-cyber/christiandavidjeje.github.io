@@ -1,0 +1,417 @@
+<!DOC<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quiz: Filósofos Presocráticos</title>
+
+  <style>
+    *{
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    body{
+      background: #f4f6f9;
+      margin: 0;
+      padding: 20px;
+      color: #222;
+    }
+
+    .contenedor{
+      max-width: 900px;
+      margin: auto;
+      background: white;
+      padding: 25px;
+      border-radius: 15px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+
+    h1{
+      text-align: center;
+      color: #1d4ed8;
+      margin-bottom: 10px;
+    }
+
+    .descripcion{
+      text-align: center;
+      color: #666;
+      margin-bottom: 30px;
+    }
+
+    .pregunta{
+      background: #f8fafc;
+      border-left: 5px solid #1d4ed8;
+      padding: 15px;
+      margin-bottom: 20px;
+      border-radius: 10px;
+    }
+
+    .pregunta h3{
+      margin-top: 0;
+      font-size: 18px;
+    }
+
+    .opcion{
+      display: block;
+      margin: 10px 0;
+      padding: 10px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .opcion:hover{
+      background: #e8f0fe;
+    }
+
+    input[type="radio"]{
+      margin-right: 10px;
+    }
+
+    button{
+      width: 100%;
+      padding: 15px;
+      border: none;
+      border-radius: 10px;
+      background: #1d4ed8;
+      color: white;
+      font-size: 18px;
+      cursor: pointer;
+    }
+
+    button:hover{
+      background: #1e40af;
+    }
+
+    .correcto{
+      color: green;
+      font-weight: bold;
+      margin-top: 10px;
+    }
+
+    .incorrecto{
+      color: #d32f2f;
+      font-weight: bold;
+      margin-top: 10px;
+    }
+
+    #resultado{
+      margin-top: 25px;
+      text-align: center;
+      font-size: 22px;
+      font-weight: bold;
+    }
+
+  <footer>
+  Creado por Christian jeje
+</footer>
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="contenedor">
+
+    <h1>Quiz: Filósofos Presocráticos</h1>
+
+    <p class="descripcion">
+      Marca la alternativa correcta y presiona <b>Calificar</b>.
+    </p>
+
+    <div id="quiz"></div>
+
+    <button onclick="calificar()">Calificar</button>
+
+    <div id="resultado"></div>
+
+    <footer>
+      Filosofía griega antigua
+    </footer>
+
+  </div>
+
+  <script>
+
+    const preguntas = [
+
+      {
+        pregunta: "1. ¿Qué significa el término 'arjé'?",
+        opciones: [
+          "El destino de los dioses",
+          "Principio fundamental u origen de todo",
+          "La ley de las ciudades griegas",
+          "El estudio de las estrellas"
+        ],
+        correcta: 1
+      },
+
+      {
+        pregunta: "2. ¿Qué filósofo afirmó que el agua es el origen de todas las cosas?",
+        opciones: [
+          "Heráclito",
+          "Parménides",
+          "Tales de Mileto",
+          "Demócrito"
+        ],
+        correcta: 2
+      },
+
+      {
+        pregunta: "3. ¿En qué ciudad nació Tales?",
+        opciones: [
+          "Éfeso",
+          "Crotona",
+          "Mileto",
+          "Abdera"
+        ],
+        correcta: 2
+      },
+
+      {
+        pregunta: "4. ¿Qué es el ápeiron según Anaximandro?",
+        opciones: [
+          "El fuego eterno",
+          "Lo indefinido o ilimitado",
+          "El conjunto de los números",
+          "La unión de los cuatro elementos"
+        ],
+        correcta: 1
+      },
+
+      {
+        pregunta: "5. ¿Qué elemento consideraba Anaxímenes como el origen de todo?",
+        opciones: [
+          "Agua",
+          "Fuego",
+          "Tierra",
+          "Aire"
+        ],
+        correcta: 3
+      },
+
+      {
+        pregunta: "6. ¿Qué procesos explican los cambios de la materia según Anaxímenes?",
+        opciones: [
+          "Creación y destrucción",
+          "Condensación y rarefacción",
+          "Amor y odio",
+          "Movimiento y reposo"
+        ],
+        correcta: 1
+      },
+
+      {
+        pregunta: "7. ¿Qué consideraban los pitagóricos como la base de la realidad?",
+        opciones: [
+          "Los números",
+          "Los átomos",
+          "El agua",
+          "El fuego"
+        ],
+        correcta: 0
+      },
+
+      {
+        pregunta: "8. ¿En qué ciudad se desarrolló la escuela pitagórica?",
+        opciones: [
+          "Mileto",
+          "Elea",
+          "Crotona",
+          "Clazómenas"
+        ],
+        correcta: 2
+      },
+
+      {
+        pregunta: "9. ¿Qué filósofo afirmaba que todo está en constante cambio?",
+        opciones: [
+          "Heráclito",
+          "Parménides",
+          "Anaxágoras",
+          "Empédocles"
+        ],
+        correcta: 0
+      },
+
+      {
+        pregunta: "10. ¿Qué elemento representa el cambio para Heráclito?",
+        opciones: [
+          "Agua",
+          "Aire",
+          "Tierra",
+          "Fuego"
+        ],
+        correcta: 3
+      },
+
+      {
+        pregunta: "11. ¿Qué afirmaba Parménides sobre el ser?",
+        opciones: [
+          "Es único, eterno e inmóvil",
+          "Está formado por átomos",
+          "Cambia constantemente",
+          "Proviene del agua"
+        ],
+        correcta: 0
+      },
+
+      {
+        pregunta: "12. ¿Qué filósofo negaba la realidad del cambio?",
+        opciones: [
+          "Heráclito",
+          "Demócrito",
+          "Parménides",
+          "Anaxímenes"
+        ],
+        correcta: 2
+      },
+
+      {
+        pregunta: "13. ¿Cuáles son los cuatro elementos de Empédocles?",
+        opciones: [
+          "Agua, tierra, metal y fuego",
+          "Tierra, agua, aire y fuego",
+          "Aire, vacío, agua y fuego",
+          "Agua, fuego, números y aire"
+        ],
+        correcta: 1
+      },
+
+      {
+        pregunta: "14. ¿Qué dos fuerzas explican el cambio según Empédocles?",
+        opciones: [
+          "Movimiento y reposo",
+          "Orden y caos",
+          "Amor y odio",
+          "Razón y experiencia"
+        ],
+        correcta: 2
+      },
+
+      {
+        pregunta: "15. ¿Qué concepto introdujo Anaxágoras para ordenar el universo?",
+        opciones: [
+          "Ápeiron",
+          "Nous",
+          "Logos",
+          "Arjé"
+        ],
+        correcta: 1
+      },
+
+      {
+        pregunta: "16. ¿Cómo llamaba Anaxágoras a las partículas que forman todo?",
+        opciones: [
+          "Átomos",
+          "Ideas",
+          "Semillas",
+          "Elementos"
+        ],
+        correcta: 2
+      },
+
+      {
+        pregunta: "17. ¿Qué filósofo desarrolló la teoría atómica?",
+        opciones: [
+          "Demócrito",
+          "Empédocles",
+          "Tales",
+          "Pitágoras"
+        ],
+        correcta: 0
+      },
+
+      {
+        pregunta: "18. ¿De qué está formado el universo según Demócrito?",
+        opciones: [
+          "Átomos y vacío",
+          "Tierra y fuego",
+          "Números y proporciones",
+          "Agua y aire"
+        ],
+        correcta: 0
+      }
+
+    ];
+
+    const quiz = document.getElementById("quiz");
+
+    preguntas.forEach((item, indice) => {
+
+      let html = `
+        <div class="pregunta">
+          <h3>${item.pregunta}</h3>
+      `;
+
+      item.opciones.forEach((opcion, i) => {
+
+        html += `
+          <label class="opcion">
+            <input type="radio" name="pregunta${indice}" value="${i}">
+            ${opcion}
+          </label>
+        `;
+
+      });
+
+      html += `<div id="mensaje${indice}"></div></div>`;
+
+      quiz.innerHTML += html;
+
+    });
+
+    function calificar() {
+
+      let puntaje = 0;
+
+      preguntas.forEach((item, indice) => {
+
+        const seleccionada = document.querySelector(
+          `input[name="pregunta${indice}"]:checked`
+        );
+
+        const mensaje = document.getElementById(`mensaje${indice}`);
+
+        if (!seleccionada) {
+
+          mensaje.innerHTML =
+            `<div class="incorrecto">⚠ Debes seleccionar una opción.</div>`;
+
+          return;
+        }
+
+        const respuesta = Number(seleccionada.value);
+
+        if (respuesta === item.correcta) {
+
+          puntaje++;
+
+          mensaje.innerHTML =
+            `<div class="correcto">✔ Correcto</div>`;
+
+        } else {
+
+          mensaje.innerHTML =
+            `<div class="incorrecto">
+              ✘ Incorrecto. Respuesta correcta: ${item.opciones[item.correcta]}
+            </div>`;
+        }
+
+      });
+
+      document.getElementById("resultado").innerHTML =
+        `Obtuviste ${puntaje} de ${preguntas.length} respuestas correctas.`;
+
+      window.scrollTo({
+        top: document.body.scrollHeight,
+        behavior: "smooth"
+      });
+
+    }
+
+  </script>
+
+</body>
+</html>
